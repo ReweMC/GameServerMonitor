@@ -197,8 +197,8 @@ def alert_embed(server: Server, alert: Alert):
     time_format = '%Y-%m-%d %I:%M:%S%p' if int(server.style_data.get('clock_format', '12')) == 12 else '%Y-%m-%d %H:%M:%S'
     query_time = datetime.now(tz=tz(server.style_data.get('timezone', 'Etc/UTC'))).strftime(time_format)
     query_time = t('embed.alert.footer.query_time', locale).format(query_time=query_time)
-    icon_url = 'https://avatars.githubusercontent.com/u/61296017'
-    embed.set_footer(text=f'DiscordGSM {__version__} | {query_time}', icon_url=icon_url)
+    icon_url = 'https://cdn.discordapp.com/attachments/1128059733891371079/1139678051710554183/FWxeyQs.png'
+    embed.set_footer(text=f'DeepslateMC | {query_time}', icon_url=icon_url)
 
     return embed
 
@@ -209,7 +209,7 @@ async def send_alert(server: Server, alert: Alert):
         content = server.style_data.get('_alert_content', '').strip()
         content = None if not content else content
         username = 'Game Server Monitor Alert'
-        avatar_url = 'https://avatars.githubusercontent.com/u/61296017'
+        avatar_url = 'https://cdn.discordapp.com/attachments/1128059733891371079/1139678051710554183/FWxeyQs.png'
 
         async with aiohttp.ClientSession() as session:
             webhook = Webhook.from_url(webhook_url, session=session)
@@ -329,27 +329,6 @@ def query_server_modal_handler(interaction: Interaction, game: GamedigGame, is_a
     modal.on_submit = modal_on_submit
 
     return modal
-
-
-@tree.command(name='sponsor', description='Sponsor to DiscordGSM', guilds=whitelist_guilds)
-async def command_sponsor(interaction: Interaction):
-    """Sponsor to DiscordGSM"""
-    Logger.command(interaction)
-
-    title = 'DiscordGSM/GameServerMonitor'
-    description = \
-    """
-    Thank you for considering a DiscordGSM sponsorship!
-
-    DiscordGSM is a free and open-source solution to your discord server monitoring your game servers on Discord and tracking the live data of your game servers.
-
-    Your sponsorship helps us keep a team of maintainers actively working to improve DiscordGSM and ensure it stays up-to-date with the latest Discord changes.
-    """
-    embed = Embed(title=title, description=description, color=discord.Color.from_rgb(88, 101, 242))
-    embed.add_field(name='❤️ Github Sponsor', value='https://github.com/sponsors/DiscordGSM')
-    embed.add_field(name='⭐ Give us a star on Github', value='https://discordgsm.com/github')
-    await interaction.response.send_message(embed=embed)
-
 
 @tree.command(name='queryserver', description='command.queryserver.description', guilds=whitelist_guilds)
 @app_commands.guild_only()
