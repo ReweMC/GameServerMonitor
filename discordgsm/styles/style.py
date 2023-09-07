@@ -100,10 +100,10 @@ class Style(ABC):
         raise NotImplementedError()
 
     def embed_data(self):
-        title = (self.server.result['password'] and '🔒 ' or '') + self.server.result['name']
+        title = "DeepslateMC"
         description = str(self.server.style_data.get('description', '')).strip()
         description = description if description else None
-        color = Color.from_rgb(88, 101, 242) if self.server.status else Color.from_rgb(32, 34, 37)
+        color = Color.from_rgb(29, 164, 191) if self.server.status else Color.from_rgb(250, 50, 10)
 
         return title, description, color
 
@@ -120,7 +120,7 @@ class Style(ABC):
             embed.add_field(name=name, value=f'`{self.server.address}`', inline=True)
         elif game_port is None or game_port == int(self.server.query_port):
             name = t('embed.field.address:port.name', self.locale)
-            embed.add_field(name=name, value=f'`{self.server.address}:{self.server.query_port}`', inline=True)
+            embed.add_field(name=name, value=f'`play.deepslatemc.de`', inline=True)
         else:
             name = t('embed.field.address:port:query.name', self.locale)
             embed.add_field(name=name, value=f'`{self.server.address}:{game_port} ({self.server.query_port})`', inline=True)
@@ -146,8 +146,8 @@ class Style(ABC):
         time_format = '%Y-%m-%d %I:%M:%S%p' if int(self.server.style_data.get('clock_format', '12')) == 12 else '%Y-%m-%d %H:%M:%S'
         last_update = datetime.now(tz=tz(self.server.style_data.get('timezone', 'Etc/UTC'))).strftime(time_format)
         last_update = t('embed.field.footer.last_update', self.locale).format(last_update=last_update)
-        icon_url = 'https://avatars.githubusercontent.com/u/61296017'
-        embed.set_footer(text=f'DiscordGSM {__version__} | {advertisement} | {last_update}', icon_url=icon_url)
+        icon_url = 'https://cdn.discordapp.com/attachments/1128059733891371079/1139678051710554183/FWxeyQs.png'
+        embed.set_footer(text=f'DeepslateMC | {last_update}', icon_url=icon_url)
 
     def set_image_and_thumbnail(self, embed: Embed):
         image_url = self.server.style_data.get('image_url', '')
